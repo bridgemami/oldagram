@@ -92,6 +92,11 @@ function amendComments(username, comment, element) {
   let count = 0;
   heartEl.addEventListener("click", () => {
     count += 1;
-    likesEl.textContent = `${count} likes`;
-  });
+    if(count === 1) {
+    likesEl.textContent = `${count} like`;
+}
+    else {
+        likesEl.textContent = `${count} likes`;}   
+    }
+  );
 }
