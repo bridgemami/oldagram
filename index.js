@@ -87,6 +87,7 @@ function amendComments(username, comment, element) {
   <p class="bold likes-margin" id="${likesId}"></p>
   <p class="comments-margin"><span class="bold">${username}</span> ${comment}</p>`;
   element.appendChild(section);
+  
   const heartEl = document.getElementById(heartId);
   const likesEl = document.getElementById(likesId);
   let count = 0;
