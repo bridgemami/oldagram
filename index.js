@@ -35,6 +35,23 @@ const posts = [
   },
 ];
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  remove,
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+const appSettings = {
+  databaseURL: "https://oldgram-like-default-rtdb.firebaseio.com/",
+};
+
+const app = initializeApp(appSettings);
+const database = getDatabase(app);
+const likestInDB = ref(database, "likes");
+
 function amendPosts(posts) {
   const postEl = document.querySelector("main");
 
@@ -87,17 +104,17 @@ function amendComments(username, comment, element) {
   <p class="bold likes-margin" id="${likesId}"></p>
   <p class="comments-margin"><span class="bold">${username}</span> ${comment}</p>`;
   element.appendChild(section);
-  
+
   const heartEl = document.getElementById(heartId);
   const likesEl = document.getElementById(likesId);
   let count = 0;
   heartEl.addEventListener("click", () => {
-    count += 1;
-    if(count === 1) {
-    likesEl.textContent = `${count} like`;
-}
-    else {
-        likesEl.textContent = `${count} likes`;}   
-    }
-  );
-}
+      count++;
+      if (count === 1) {
+        likesEl.textContent = `1 like`;
+      } else {
+        likesEl.textContent = `${count} likes`;
+      }
+      }
+    );
+  }
