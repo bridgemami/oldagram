@@ -35,23 +35,6 @@ const posts = [
   },
 ];
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  push,
-  onValue,
-  remove,
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-const appSettings = {
-  databaseURL: "https://oldgram-like-default-rtdb.firebaseio.com/",
-};
-
-const app = initializeApp(appSettings);
-const database = getDatabase(app);
-const likestInDB = ref(database, "likes");
-
 function amendPosts(posts) {
   const postEl = document.querySelector("main");
 
