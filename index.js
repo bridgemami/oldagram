@@ -7,6 +7,7 @@ const posts = [
     post: "images/post-vangogh.jpg",
     comment: "just took a few mushrooms lol",
     likes: 21,
+    
     alt: "Vincent's avatar",
     altPost: "Vincent's post",
   },
@@ -35,9 +36,22 @@ const posts = [
   },
 ];
 
-function amendPosts(posts) {
-  const postEl = document.querySelector("main");
+ const postEl = document.querySelector("main");
+  postEl.addEventListener("click", (e) => {
+    // if the like button is clicked
+    if(e.target.id.includes("-heart")){
+      console.log(e.target.id);
+      const user = e.target.id.split('-')[0];
+      const usernameArray = posts.map(post => post.username)
+      const userIndex = usernameArray.indexOf(user);
+      posts[userIndex].likes++ 
+     
+    }      
+      amendPosts(posts)
+  })
 
+function amendPosts(posts) {
+ postEl.innerHTML = ""
   for (let i = 0; i < posts.length; i++) {
     let name = posts[i].name;
     let username = posts[i].username;
@@ -47,9 +61,11 @@ function amendPosts(posts) {
     let postAlt = posts[i].altPost;
     let comment = posts[i].comment;
     let alt = posts[i].alt;
+    let likes = posts[i].likes
+
     amendPostInfo(name, avatar, location, alt, postEl);
     amendPost(postImage, postAlt, postEl);
-    amendComments(username, comment, postEl);
+    amendComments(username, comment, postEl, likes);
   }
 }
 
@@ -73,13 +89,14 @@ function amendPost(postImage, postAlt, element) {
   element.appendChild(figure);
 }
 
-function amendComments(username, comment, element) {
+function amendComments(username, comment, element, likes) {
   const section = document.createElement("section");
   const heartId = `${username}-heart`;
   const likesId = `${username}-likes`;
   section.classList.add("post");
   section.classList.add("bottom-border");
   section.innerHTML += `<figure class="zeros">
+    <p class="bold likes-margin" id="${likesId}">${likes === 1 ? "1 like" : likes + " likes"}</p>
     <img src="images/icon-heart.png" alt="heart icon" class="icons" id="${heartId}"/>
     <img src="images/icon-comment.png" alt="comment icon" class="icons" />
     <img src="images/icon-dm.png" alt="direct message icon" class="icons" />
@@ -87,17 +104,4 @@ function amendComments(username, comment, element) {
   <p class="bold likes-margin" id="${likesId}"></p>
   <p class="comments-margin"><span class="bold">${username}</span> ${comment}</p>`;
   element.appendChild(section);
-
-  const heartEl = document.getElementById(heartId);
-  const likesEl = document.getElementById(likesId);
-  let count = 0;
-  heartEl.addEventListener("click", () => {
-      count++;
-      if (count === 1) {
-        likesEl.textContent = `1 like`;
-      } else {
-        likesEl.textContent = `${count} likes`;
-      }
-      }
-    );
   }
